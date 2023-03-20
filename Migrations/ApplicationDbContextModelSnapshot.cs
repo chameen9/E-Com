@@ -16,8 +16,151 @@ namespace E_Com.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.14")
+                .HasAnnotation("ProductVersion", "6.0.15")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("E_Com.Models.Data.MemoryDevices", b =>
+                {
+                    b.Property<int>("MemoryDeviceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("MemoryBrand")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("MemoryCapacity")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("MemoryName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("MemoryType")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("MemoryDeviceId");
+
+                    b.ToTable("MemoryDevices");
+                });
+
+            modelBuilder.Entity("E_Com.Models.Data.OperatingSytems", b =>
+                {
+                    b.Property<int>("OSId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("OSBrand")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("OSEdition")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("OSVersion")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("OSId");
+
+                    b.ToTable("OperatingSytems");
+                });
+
+            modelBuilder.Entity("E_Com.Models.Data.Processors", b =>
+                {
+                    b.Property<int>("ProcessorTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProcessorBrand")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ProcessorGeneration")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ProcessorSpeed")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ProcessorType")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("ProcessorTypeId");
+
+                    b.ToTable("Processors");
+                });
+
+            modelBuilder.Entity("E_Com.Models.Data.Products", b =>
+                {
+                    b.Property<string>("ProductId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("MemoryDeviceId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("OSId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProcessorTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StorageDeviceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VGADeviceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId");
+
+                    b.HasIndex("MemoryDeviceId");
+
+                    b.HasIndex("OSId");
+
+                    b.HasIndex("ProcessorTypeId");
+
+                    b.HasIndex("StorageDeviceId");
+
+                    b.HasIndex("VGADeviceId");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("E_Com.Models.Data.StorageDevices", b =>
+                {
+                    b.Property<int>("StorageDeviceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("StorageDeviceName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("StrageDeviceCapacity")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("StrageDeviceType")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("StorageDeviceId");
+
+                    b.ToTable("StorageDevices");
+                });
 
             modelBuilder.Entity("E_Com.Models.Data.User", b =>
                 {
@@ -37,9 +180,8 @@ namespace E_Com.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("UserType")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -47,7 +189,56 @@ namespace E_Com.Migrations
 
                     b.HasKey("UserId");
 
+                    b.HasIndex("TypeId");
+
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("E_Com.Models.Data.UserTypes", b =>
+                {
+                    b.Property<int>("TypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("TypeName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("TypeId");
+
+                    b.ToTable("UserTypes");
+                });
+
+            modelBuilder.Entity("E_Com.Models.Data.VGADevices", b =>
+                {
+                    b.Property<int>("VGADeviceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("VGABrand")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("VGARefreshRate")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("VGAVRAMSize")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("VGADeviceId");
+
+                    b.ToTable("VGADevices");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -246,6 +437,60 @@ namespace E_Com.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("E_Com.Models.Data.Products", b =>
+                {
+                    b.HasOne("E_Com.Models.Data.MemoryDevices", "MemoryDevices")
+                        .WithMany("Products")
+                        .HasForeignKey("MemoryDeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("E_Com.Models.Data.OperatingSytems", "OperatingSytems")
+                        .WithMany("Products")
+                        .HasForeignKey("OSId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("E_Com.Models.Data.Processors", "Processors")
+                        .WithMany("Products")
+                        .HasForeignKey("ProcessorTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("E_Com.Models.Data.StorageDevices", "StorageDevices")
+                        .WithMany()
+                        .HasForeignKey("StorageDeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("E_Com.Models.Data.VGADevices", "VGADevices")
+                        .WithMany("Products")
+                        .HasForeignKey("VGADeviceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MemoryDevices");
+
+                    b.Navigation("OperatingSytems");
+
+                    b.Navigation("Processors");
+
+                    b.Navigation("StorageDevices");
+
+                    b.Navigation("VGADevices");
+                });
+
+            modelBuilder.Entity("E_Com.Models.Data.User", b =>
+                {
+                    b.HasOne("E_Com.Models.Data.UserTypes", "UserTypes")
+                        .WithMany("User")
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserTypes");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -295,6 +540,31 @@ namespace E_Com.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("E_Com.Models.Data.MemoryDevices", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("E_Com.Models.Data.OperatingSytems", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("E_Com.Models.Data.Processors", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("E_Com.Models.Data.UserTypes", b =>
+                {
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("E_Com.Models.Data.VGADevices", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }
