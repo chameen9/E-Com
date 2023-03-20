@@ -18,24 +18,24 @@
                 <span asp-validation-for="ProductId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProcessorTypeId" class="control-label"></label>
-                <select asp-for="ProcessorTypeId" class ="form-control" asp-items="ViewBag.ProcessorTypeId"></select>
-            </div>
-            <div class="form-group">
                 <label asp-for="MemoryDeviceId" class="control-label"></label>
-                <select asp-for="MemoryDeviceId" class ="form-control" asp-items="ViewBag.MemoryDeviceId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="VGADeviceId" class="control-label"></label>
-                <select asp-for="VGADeviceId" class ="form-control" asp-items="ViewBag.VGADeviceId"></select>
+                <select asp-for="MemoryDeviceId" class="form-control" asp-items="@ViewBag.MemoryDeviceId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="OSId" class="control-label"></label>
-                <select asp-for="OSId" class ="form-control" asp-items="ViewBag.OSId"></select>
+                <select asp-for="OSId" class="form-control" asp-items="@ViewBag.OSId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProcessorTypeId" class="control-label"></label>
+                <select asp-for="ProcessorTypeId" class="form-control" asp-items="@ViewBag.ProcessorTypeId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="StorageDeviceId" class="control-label"></label>
-                <select asp-for="StorageDeviceId" class ="form-control" asp-items="ViewBag.StorageDeviceId"></select>
+                <select asp-for="StorageDeviceId" class="form-control" asp-items="@ViewBag.StorageDeviceId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="VGADeviceId" class="control-label"></label>
+                <select asp-for="VGADeviceId" class="form-control" asp-items="@ViewBag.VGADeviceId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="CreatedAt" class="control-label"></label>

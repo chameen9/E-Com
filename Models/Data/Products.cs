@@ -6,7 +6,7 @@ namespace E_Com.Models.Data
     public class Products : PublicProps
     {
         [Key]
-        public string ProductId { get; set; }
+        public Guid ProductId { get; set; }
 
         [ForeignKey("Processors")]
         public int ProcessorTypeId { get; set; }
