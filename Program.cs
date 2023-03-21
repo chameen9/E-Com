@@ -1,3 +1,5 @@
+using E_Com.Business.Interfaces;
+using E_Com.Business.Services;
 using E_Com.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +19,16 @@ builder.Services.AddDbContextPool<ApplicationDbContext>(options =>
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+
+// add services
+builder.Services.AddScoped<IProductService,ProductService>();
+builder.Services.AddScoped<IMemoryDeviceService,MemoryDeviceService>();
+builder.Services.AddScoped<IOSService,OSService>();
+builder.Services.AddScoped<IProcessorSrvice,ProcessorSrvice>();
+builder.Services.AddScoped<IStraogeServices, StraogeServices>();
+builder.Services.AddScoped<IVGAService, VGAService>();
+
 
 var app = builder.Build();
 

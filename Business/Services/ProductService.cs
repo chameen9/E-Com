@@ -15,13 +15,13 @@ namespace E_Com.Business.Services
 
         public void AddProduct(Products model)
         {
-            model.ProductId = Guid.NewGuid();
+            //model.ProductId = Guid.NewGuid();
             model.CreatedAt = DateTime.Now;
             _context.Products.Add(model);
             _context.SaveChanges();
         }
 
-        public void DeleteProduct(Guid? id)
+        public void DeleteProdcut(string? id)
         {
             var product = _context.Products.FirstOrDefault(x => x.ProductId == id);
             if (product != null)
@@ -32,7 +32,7 @@ namespace E_Com.Business.Services
             }
         }
 
-        public void EditProducts(Products model)
+        public void EditProduct(Products model)
         {
             _context.Update(model);
             _context.SaveChangesAsync();
@@ -44,7 +44,7 @@ namespace E_Com.Business.Services
             return products;
         }
 
-        public Products GetProductById(Guid? id)
+        public Products GetProductById(string? id)
         {
             if (id == null || _context.Products == null)
             {

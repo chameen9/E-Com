@@ -13,12 +13,23 @@ namespace E_Com.Controllers
 {
     public class ProductsController : Controller
     {
-        //private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IProductService _productService;
+        private readonly IMemoryDeviceService _memoryDeviceService;
+        private readonly IOSService _operatingSystemService;
+        private readonly IProcessorSrvice _processorService;
+        private readonly IStraogeServices _straogeServices;
+        private readonly IVGAService _vgaServices;
 
-        public ProductsController(IProductService productService)
+        public ProductsController(IProductService productService, IMemoryDeviceService memoryDeviceService, IOSService operatingSystemService, IProcessorSrvice processorService, IStraogeServices straogeServices, IVGAService vgaServices)
         {
             _productService = productService;
+            _memoryDeviceService = memoryDeviceService;
+            _operatingSystemService = operatingSystemService;
+            _operatingSystemService = operatingSystemService;
+            _processorService = processorService;
+            _straogeServices = straogeServices;
+            _vgaServices = vgaServices;
         }
        
 
@@ -65,15 +76,22 @@ namespace E_Com.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
-            return View();
+            //return View();
 
             //ViewData["MemoryDeviceId"] = new SelectList(_context.MemoryDevices, "MemoryDeviceId", "MemoryDeviceId");
             //ViewData["OSId"] = new SelectList(_context.OperatingSytems, "OSId", "OSId");
             //ViewData["ProcessorTypeId"] = new SelectList(_context.Processors, "ProcessorTypeId", "ProcessorTypeId");
             //ViewData["StorageDeviceId"] = new SelectList(_context.StorageDevices, "StorageDeviceId", "StorageDeviceId");
             //ViewData["VGADeviceId"] = new SelectList(_context.VGADevices, "VGADeviceId", "VGADeviceId");
-
             //return View();
+
+            ViewData["MemoryDeviceId"] = new SelectList(_memoryDeviceService.GetAllMemoryDevices(), "MemoryDeviceId", "MemoryDeviceId");
+            ViewData["OSId"] = new SelectList(_operatingSystemService.GetAllOperatingSystems(), "OSId", "OSId");
+            ViewData["ProcessorTypeId"] = new SelectList(_processorService.GetAllProcessors(), "ProcessorTypeId", "ProcessorTypeId");
+            ViewData["StorageDeviceId"] = new SelectList(_straogeServices.GetAllStorageDevices(), "StorageDeviceId", "StorageDeviceId");
+            ViewData["VGADeviceId"] = new SelectList(_vgaServices.GetAllVGADevices(), "VGADeviceId", "VGADeviceId");
+
+            return View();
         }
 
         // POST: Products/Create
@@ -83,12 +101,14 @@ namespace E_Com.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Products products)
         {
-            if (ModelState.IsValid)
-            {
-                _productService.AddProduct(products);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(products);
+            //if (ModelState.IsValid)
+            //{
+            //    _productService.AddProduct(products);
+            //    return RedirectToAction(nameof(Index));
+            //}
+            _productService.AddProduct(products);
+            return RedirectToAction(nameof(Index));
+            //return View(products);
 
             //if (ModelState.IsValid)
             //{
@@ -144,12 +164,21 @@ namespace E_Com.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Products product)
         {
-            if (ModelState.IsValid)
+            if(product != null)
             {
                 _productService.EditProduct(product);
                 return RedirectToAction("Index");
             }
-            return View(product);
+            else
+            {
+                return View(product);
+            }
+            //if (ModelState.IsValid)
+            //{
+            //    _productService.EditProduct(product);
+            //    return RedirectToAction("Index");
+            //}
+            //return View(product);
             //if (id != products.ProductId)
             //{
             //    return NotFound();

@@ -1,0 +1,77 @@
+﻿@model IEnumerable<E_Com.Models.Data.Products>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Processors)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MemoryDevices)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VGADevices)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OperatingSytems)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StorageDevices)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeletedAt)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Processors.ProcessorTypeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MemoryDevices.MemoryDeviceId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VGADevices.VGADeviceId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OperatingSytems.OSId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StorageDevices.StorageDeviceId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeletedAt)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

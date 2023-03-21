@@ -6,8 +6,8 @@ namespace E_Com.Business.Interfaces
     {
         void AddProduct(Products model);
         List<Products> GetAllProducts();
-        Products GetProductById(Guid? id);
+        Products GetProductById(string? id);
         void EditProduct(Products model);
-        void DeleteProdcut(Guid? id);
+        void DeleteProdcut(string? id);
     }
 }
