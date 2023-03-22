@@ -7,6 +7,12 @@ namespace E_Com.Models.Data
     {
         [Key]
         public string ProductId { get; set; }
+        public string ProductName { get; set; }
+        public string ProductDescription { get; set; }
+
+        [ForeignKey("ProductCategory")]
+        public int ProductCategoryId { get; set;}
+        public ProductCategory ProductCategory { get; set; }
 
         [ForeignKey("Processors")]
         public int ProcessorTypeId { get; set; }

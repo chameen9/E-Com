@@ -18,6 +18,7 @@ namespace E_Com.Data
         public DbSet<StorageDevices> StorageDevices { get; set; }
         public DbSet<Processors> Processors { get; set; }
         public DbSet<VGADevices> VGADevices { get; set; }
+        public DbSet<ProductCategory> ProductCategory { get; set; }
 
         public DbSet<Products> Products { get; set; }
     }

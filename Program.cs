@@ -21,7 +21,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews();
 
 
-// add services
+// Services Used
 builder.Services.AddScoped<IProductService,ProductService>();
 builder.Services.AddScoped<IMemoryDeviceService,MemoryDeviceService>();
 builder.Services.AddScoped<IOSService,OSService>();

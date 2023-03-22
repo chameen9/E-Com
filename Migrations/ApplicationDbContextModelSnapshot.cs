@@ -95,6 +95,33 @@ namespace E_Com.Migrations
                     b.ToTable("Processors");
                 });
 
+            modelBuilder.Entity("E_Com.Models.Data.ProductCategory", b =>
+                {
+                    b.Property<int>("ProductCategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ProductCategoryDescription")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ProductCategoryName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("ProductCategoryId");
+
+                    b.ToTable("ProductCategory");
+                });
+
             modelBuilder.Entity("E_Com.Models.Data.Products", b =>
                 {
                     b.Property<string>("ProductId")
@@ -118,6 +145,17 @@ namespace E_Com.Migrations
                     b.Property<int>("ProcessorTypeId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProductCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductDescription")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ProductName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<int>("StorageDeviceId")
                         .HasColumnType("int");
 
@@ -131,6 +169,8 @@ namespace E_Com.Migrations
                     b.HasIndex("OSId");
 
                     b.HasIndex("ProcessorTypeId");
+
+                    b.HasIndex("ProductCategoryId");
 
                     b.HasIndex("StorageDeviceId");
 
@@ -457,6 +497,12 @@ namespace E_Com.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("E_Com.Models.Data.ProductCategory", "ProductCategory")
+                        .WithMany()
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("E_Com.Models.Data.StorageDevices", "StorageDevices")
                         .WithMany()
                         .HasForeignKey("StorageDeviceId")
@@ -474,6 +520,8 @@ namespace E_Com.Migrations
                     b.Navigation("OperatingSytems");
 
                     b.Navigation("Processors");
+
+                    b.Navigation("ProductCategory");
 
                     b.Navigation("StorageDevices");
 

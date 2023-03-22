@@ -1,17 +1,23 @@
 ﻿@model IEnumerable<E_Com.Models.Data.Products>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Products";
 }
 
-<h1>Index</h1>
+<h1>Products</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-sm btn-primary" asp-action="Create">Add New Product</a>
 </p>
-<table class="table">
+<table class="table table-striped table-hover">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Processors)
             </th>
@@ -27,49 +33,41 @@
             <th>
                 @Html.DisplayNameFor(model => model.StorageDevices)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeletedAt)
-            </th>
-            <th></th>
+            
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Processors.ProcessorTypeId)
+                @Html.DisplayFor(modelItem => item.ProductId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MemoryDevices.MemoryDeviceId)
+                @Html.DisplayFor(modelItem => item.ProductName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.VGADevices.VGADeviceId)
+                @Html.DisplayFor(modelItem => item.Processors.ProcessorBrand) @Html.DisplayFor(modelItem => item.Processors.ProcessorType)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OperatingSytems.OSId)
+                @Html.DisplayFor(modelItem => item.MemoryDevices.MemoryName) @Html.DisplayFor(modelItem => item.MemoryDevices.MemoryType)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StorageDevices.StorageDeviceId)
+                @Html.DisplayFor(modelItem => item.VGADevices.VGABrand) 
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
+                @Html.DisplayFor(modelItem => item.OperatingSytems.OSBrand)  @Html.DisplayFor(modelItem => item.OperatingSytems.OSVersion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ModifiedAt)
+                @Html.DisplayFor(modelItem => item.StorageDevices.StrageDeviceType) @Html.DisplayFor(modelItem => item.StorageDevices.StorageDeviceName)
             </td>
+            
             <td>
-                @Html.DisplayFor(modelItem => item.DeletedAt)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a>
+                    <a class="btn btn-sm btn-primary" asp-action="Details" asp-route-id="@item.ProductId">Details</a>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                </div>
             </td>
         </tr>
 }

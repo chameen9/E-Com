@@ -1,46 +1,70 @@
 ﻿@model E_Com.Models.Data.Products
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Product Details";
 }
 
-<h1>Details</h1>
+<h1>Product Details @Html.DisplayFor(model => model.ProductId) </h1>
 
 <div>
-    <h4>Products</h4>
+    
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Processors)
+        <dt class="col-sm-2">
+            Product Name
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Processors.ProcessorTypeId)
+        <dt class="col-sm-1">
+            :
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.ProductName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MemoryDevices)
+            Processor
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MemoryDevices.MemoryDeviceId)
+        <dt class="col-sm-1">
+            :
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.Processors.ProcessorBrand) @Html.DisplayFor(model => model.Processors.ProcessorType)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VGADevices)
+            Memory :
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VGADevices.VGADeviceId)
+        <dt class="col-sm-1">
+            :
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.MemoryDevices.MemoryName) @Html.DisplayFor(model => model.MemoryDevices.MemoryType)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OperatingSytems)
+            VGA
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OperatingSytems.OSId)
+        <dt class="col-sm-1">
+            :
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.VGADevices.VGABrand)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StorageDevices)
+            Operating System
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StorageDevices.StorageDeviceId)
+        <dt class="col-sm-1">
+            :
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.OperatingSytems.OSBrand) @Html.DisplayFor(model => model.OperatingSytems.OSVersion) @Html.DisplayFor(model => model.OperatingSytems.OSEdition)
         </dd>
         <dt class = "col-sm-2">
+            Storage
+        </dt>
+        <dt class="col-sm-1">
+            :
+        </dt>
+        <dd class = "col-sm-9">
+            ( @Html.DisplayFor(model => model.StorageDevices.StrageDeviceType) ) @Html.DisplayFor(model => model.StorageDevices.StorageDeviceName)
+        </dd>
+        @*<dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CreatedAt)
         </dt>
         <dd class = "col-sm-10">
@@ -57,7 +81,7 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DeletedAt)
-        </dd>
+        </dd>*@
     </dl>
 </div>
 <div>

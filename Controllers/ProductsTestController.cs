@@ -65,20 +65,31 @@ namespace E_Com.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,ProcessorTypeId,MemoryDeviceId,VGADeviceId,OSId,StorageDeviceId,CreatedAt,ModifiedAt,DeletedAt")] Products products)
+        public async Task<IActionResult> Create([Bind("ProductId,ProductName,ProcessorTypeId,MemoryDeviceId,VGADeviceId,OSId,StorageDeviceId,CreatedAt,ModifiedAt,DeletedAt")] Products products)
         {
-            if (ModelState.IsValid)
-            {
+            //var thisProductID = products.ProductId;
+            //var existingProductId = _context.Products.FirstOrDefault(p => p.ProductId == thisProductID);
+            //if(existingProductId == null) { return NotFound(); }
+            //else
+            //{
                 _context.Add(products);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["MemoryDeviceId"] = new SelectList(_context.MemoryDevices, "MemoryDeviceId", "MemoryDeviceId", products.MemoryDeviceId);
-            ViewData["OSId"] = new SelectList(_context.OperatingSytems, "OSId", "OSId", products.OSId);
-            ViewData["ProcessorTypeId"] = new SelectList(_context.Processors, "ProcessorTypeId", "ProcessorTypeId", products.ProcessorTypeId);
-            ViewData["StorageDeviceId"] = new SelectList(_context.StorageDevices, "StorageDeviceId", "StorageDeviceId", products.StorageDeviceId);
-            ViewData["VGADeviceId"] = new SelectList(_context.VGADevices, "VGADeviceId", "VGADeviceId", products.VGADeviceId);
-            return View(products);
+            //}
+           
+            //products.CreatedAt = DateTime.Now;
+            //if (ModelState.IsValid)
+            //{
+            //    _context.Add(products);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //ViewData["MemoryDeviceId"] = new SelectList(_context.MemoryDevices, "MemoryDeviceId", "MemoryDeviceId", products.MemoryDeviceId);
+            //ViewData["OSId"] = new SelectList(_context.OperatingSytems, "OSId", "OSId", products.OSId);
+            //ViewData["ProcessorTypeId"] = new SelectList(_context.Processors, "ProcessorTypeId", "ProcessorTypeId", products.ProcessorTypeId);
+            //ViewData["StorageDeviceId"] = new SelectList(_context.StorageDevices, "StorageDeviceId", "StorageDeviceId", products.StorageDeviceId);
+            //ViewData["VGADeviceId"] = new SelectList(_context.VGADevices, "VGADeviceId", "VGADeviceId", products.VGADeviceId);
+            //return View(products);
         }
 
         // GET: ProductsTest/Edit/5
@@ -107,7 +118,7 @@ namespace E_Com.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ProductId,ProcessorTypeId,MemoryDeviceId,VGADeviceId,OSId,StorageDeviceId,CreatedAt,ModifiedAt,DeletedAt")] Products products)
+        public async Task<IActionResult> Edit(string id, [Bind("ProductId,ProductName,ProcessorTypeId,MemoryDeviceId,VGADeviceId,OSId,StorageDeviceId,CreatedAt,ModifiedAt,DeletedAt")] Products products)
         {
             if (id != products.ProductId)
             {
