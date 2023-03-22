@@ -13,6 +13,15 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductCategory)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Processors)
             </th>
             <th>
@@ -27,7 +36,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.StorageDevices)
             </th>
-            @*<th>
+            <th>
                 @Html.DisplayNameFor(model => model.CreatedAt)
             </th>
             <th>
@@ -35,7 +44,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DeletedAt)
-            </th>*@
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -43,21 +52,30 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ProcessorTypeId)
+                @Html.DisplayFor(modelItem => item.ProductName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MemoryDeviceId)
+                @Html.DisplayFor(modelItem => item.ProductDescription)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.VGADeviceId)
+                @Html.DisplayFor(modelItem => item.ProductCategory.ProductCategoryId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OSId)
+                @Html.DisplayFor(modelItem => item.Processors.ProcessorTypeId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StorageDeviceId)
+                @Html.DisplayFor(modelItem => item.MemoryDevices.MemoryDeviceId)
             </td>
-            @*<td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VGADevices.VGADeviceId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OperatingSytems.OSId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StorageDevices.StorageDeviceId)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.CreatedAt)
             </td>
             <td>
@@ -65,7 +83,7 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DeletedAt)
-            </td>*@
+            </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |

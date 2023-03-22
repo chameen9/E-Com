@@ -7,62 +7,58 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using E_Com.Data;
 using E_Com.Models.Data;
-using E_Com.Business.Interfaces;
 
 namespace E_Com.Controllers
 {
     public class ProductsController : Controller
     {
-        //private readonly ApplicationDbContext _context;
-        private readonly IProductService _productService;
-        private readonly IMemoryDeviceService _memoryDeviceService;
-        private readonly IOSService _operatingSystemService;
-        private readonly IProcessorSrvice _processorService;
-        private readonly IStraogeServices _straogeServices;
-        private readonly IVGAService _vgaServices;
+        private readonly ApplicationDbContext _context;
 
-        public ProductsController(IProductService productService, IMemoryDeviceService memoryDeviceService, IOSService operatingSystemService, IProcessorSrvice processorService, IStraogeServices straogeServices, IVGAService vgaServices)
+        public ProductsController(ApplicationDbContext context)
         {
-            _productService = productService;
-            _memoryDeviceService = memoryDeviceService;
-            _operatingSystemService = operatingSystemService;
-            _operatingSystemService = operatingSystemService;
-            _processorService = processorService;
-            _straogeServices = straogeServices;
-            _vgaServices = vgaServices;
+            _context = context;
         }
-       
 
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var products = _productService.GetAllProducts();
-            return View(products);
-
+            var applicationDbContext = _context.Products.Include(p => p.MemoryDevices).Include(p => p.OperatingSytems).Include(p => p.Processors).Include(p => p.ProductCategory).Include(p => p.StorageDevices).Include(p => p.VGADevices);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(string id)
         {
-            var product = _productService.GetProductById(id);
-            if (product == null)
+            if (id == null || _context.Products == null)
             {
                 return NotFound();
             }
-            return View(product);
 
+            var products = await _context.Products
+                .Include(p => p.MemoryDevices)
+                .Include(p => p.OperatingSytems)
+                .Include(p => p.Processors)
+                .Include(p => p.ProductCategory)
+                .Include(p => p.StorageDevices)
+                .Include(p => p.VGADevices)
+                .FirstOrDefaultAsync(m => m.ProductId == id);
+            if (products == null)
+            {
+                return NotFound();
+            }
+
+            return View(products);
         }
 
         // GET: Products/Create
         public IActionResult Create()
         {
-
-            ViewData["MemoryDeviceId"] = new SelectList(_memoryDeviceService.GetAllMemoryDevices(), "MemoryDeviceId", "MemoryDeviceId");
-            ViewData["OSId"] = new SelectList(_operatingSystemService.GetAllOperatingSystems(), "OSId", "OSId");
-            ViewData["ProcessorTypeId"] = new SelectList(_processorService.GetAllProcessors(), "ProcessorTypeId", "ProcessorTypeId");
-            ViewData["StorageDeviceId"] = new SelectList(_straogeServices.GetAllStorageDevices(), "StorageDeviceId", "StorageDeviceId");
-            ViewData["VGADeviceId"] = new SelectList(_vgaServices.GetAllVGADevices(), "VGADeviceId", "VGADeviceId");
-
+            ViewData["MemoryDeviceId"] = new SelectList(_context.MemoryDevices, "MemoryDeviceId", "MemoryDeviceId");
+            ViewData["OSId"] = new SelectList(_context.OperatingSytems, "OSId", "OSId");
+            ViewData["ProcessorTypeId"] = new SelectList(_context.Processors, "ProcessorTypeId", "ProcessorTypeId");
+            ViewData["ProductCategoryId"] = new SelectList(_context.ProductCategory, "ProductCategoryId", "ProductCategoryId");
+            ViewData["StorageDeviceId"] = new SelectList(_context.StorageDevices, "StorageDeviceId", "StorageDeviceId");
+            ViewData["VGADeviceId"] = new SelectList(_context.VGADevices, "VGADeviceId", "VGADeviceId");
             return View();
         }
 
@@ -71,34 +67,43 @@ namespace E_Com.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Products products)
+        public async Task<IActionResult> Create([Bind("ProductId,ProductName,ProductDescription,ProductCategoryId,ProcessorTypeId,MemoryDeviceId,VGADeviceId,OSId,StorageDeviceId,CreatedAt,ModifiedAt,DeletedAt")] Products products)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    _productService.AddProduct(products);
-            //    return RedirectToAction(nameof(Index));
-            //}
-            _productService.AddProduct(products);
-            return RedirectToAction(nameof(Index));
-            //return View(products);
-
+            if (ModelState.IsValid)
+            {
+                _context.Add(products);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["MemoryDeviceId"] = new SelectList(_context.MemoryDevices, "MemoryDeviceId", "MemoryDeviceId", products.MemoryDeviceId);
+            ViewData["OSId"] = new SelectList(_context.OperatingSytems, "OSId", "OSId", products.OSId);
+            ViewData["ProcessorTypeId"] = new SelectList(_context.Processors, "ProcessorTypeId", "ProcessorTypeId", products.ProcessorTypeId);
+            ViewData["ProductCategoryId"] = new SelectList(_context.ProductCategory, "ProductCategoryId", "ProductCategoryId", products.ProductCategoryId);
+            ViewData["StorageDeviceId"] = new SelectList(_context.StorageDevices, "StorageDeviceId", "StorageDeviceId", products.StorageDeviceId);
+            ViewData["VGADeviceId"] = new SelectList(_context.VGADevices, "VGADeviceId", "VGADeviceId", products.VGADeviceId);
+            return View(products);
         }
 
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
-            if (id == null)
+            if (id == null || _context.Products == null)
             {
                 return NotFound();
             }
 
-            var product = _productService.GetProductById(id);
-            if (product == null)
+            var products = await _context.Products.FindAsync(id);
+            if (products == null)
             {
                 return NotFound();
             }
-            return View(product);
-
+            ViewData["MemoryDeviceId"] = new SelectList(_context.MemoryDevices, "MemoryDeviceId", "MemoryDeviceId", products.MemoryDeviceId);
+            ViewData["OSId"] = new SelectList(_context.OperatingSytems, "OSId", "OSId", products.OSId);
+            ViewData["ProcessorTypeId"] = new SelectList(_context.Processors, "ProcessorTypeId", "ProcessorTypeId", products.ProcessorTypeId);
+            ViewData["ProductCategoryId"] = new SelectList(_context.ProductCategory, "ProductCategoryId", "ProductCategoryId", products.ProductCategoryId);
+            ViewData["StorageDeviceId"] = new SelectList(_context.StorageDevices, "StorageDeviceId", "StorageDeviceId", products.StorageDeviceId);
+            ViewData["VGADeviceId"] = new SelectList(_context.VGADevices, "VGADeviceId", "VGADeviceId", products.VGADeviceId);
+            return View(products);
         }
 
         // POST: Products/Edit/5
@@ -106,23 +111,64 @@ namespace E_Com.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Products product)
+        public async Task<IActionResult> Edit(string id, [Bind("ProductId,ProductName,ProductDescription,ProductCategoryId,ProcessorTypeId,MemoryDeviceId,VGADeviceId,OSId,StorageDeviceId,CreatedAt,ModifiedAt,DeletedAt")] Products products)
         {
-            if(product != null)
+            if (id != products.ProductId)
             {
-                _productService.EditProduct(product);
-                return RedirectToAction("Index");
+                return NotFound();
             }
-            else
+
+            if (ModelState.IsValid)
             {
-                return View(product);
+                try
+                {
+                    _context.Update(products);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductsExists(products.ProductId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
             }
+            ViewData["MemoryDeviceId"] = new SelectList(_context.MemoryDevices, "MemoryDeviceId", "MemoryDeviceId", products.MemoryDeviceId);
+            ViewData["OSId"] = new SelectList(_context.OperatingSytems, "OSId", "OSId", products.OSId);
+            ViewData["ProcessorTypeId"] = new SelectList(_context.Processors, "ProcessorTypeId", "ProcessorTypeId", products.ProcessorTypeId);
+            ViewData["ProductCategoryId"] = new SelectList(_context.ProductCategory, "ProductCategoryId", "ProductCategoryId", products.ProductCategoryId);
+            ViewData["StorageDeviceId"] = new SelectList(_context.StorageDevices, "StorageDeviceId", "StorageDeviceId", products.StorageDeviceId);
+            ViewData["VGADeviceId"] = new SelectList(_context.VGADevices, "VGADeviceId", "VGADeviceId", products.VGADeviceId);
+            return View(products);
         }
 
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
-            return View();
+            if (id == null || _context.Products == null)
+            {
+                return NotFound();
+            }
+
+            var products = await _context.Products
+                .Include(p => p.MemoryDevices)
+                .Include(p => p.OperatingSytems)
+                .Include(p => p.Processors)
+                .Include(p => p.ProductCategory)
+                .Include(p => p.StorageDevices)
+                .Include(p => p.VGADevices)
+                .FirstOrDefaultAsync(m => m.ProductId == id);
+            if (products == null)
+            {
+                return NotFound();
+            }
+
+            return View(products);
         }
 
         // POST: Products/Delete/5
@@ -130,14 +176,23 @@ namespace E_Com.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            _productService.DeleteProdcut(id);
-            return RedirectToAction();
+            if (_context.Products == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Products'  is null.");
+            }
+            var products = await _context.Products.FindAsync(id);
+            if (products != null)
+            {
+                _context.Products.Remove(products);
+            }
+            
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         private bool ProductsExists(string id)
         {
-          //return (_context.Products?.Any(e => e.ProductId == id)).GetValueOrDefault();
-            return false;
+          return (_context.Products?.Any(e => e.ProductId == id)).GetValueOrDefault();
         }
     }
 }
