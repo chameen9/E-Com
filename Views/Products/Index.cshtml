@@ -11,9 +11,10 @@
     <a asp-action="Create" class="btn btn-primary">Add New Product</a>
 </p>
 <table class="table table-hover table-striped">
-    <thead>
+    @*<thead>
         <tr>
             <th>Product Id</th>
+            <th>Image</th>
             <th>
                 Name
             </th>
@@ -51,6 +52,7 @@
         {
             <tr>
                 <td>@Product.ProductId</td>
+                <td><img src="@Url.Content("~/img/" + Product.ImageFileName)" height="200px" width="200px" alt="Product Image"/></td>
                 <td>@Product.ProductName</td>
                 <td>@Product.ProductDescription</td>
                 <td>@Product.ProductCategory.ProductCategoryName</td>
@@ -67,5 +69,39 @@
                 </td>
             </tr>
         }
-    </tbody>
+    </tbody>*@
+    
 </table>
+
+<div class="row">
+    @foreach (var Product in ProductsList)
+    {
+        <div class="col-3 mb-4">
+            <a asp-action="Details" asp-route-id="@Product.ProductId" class="text-body" style="text-decoration:none">
+                <div class="card shadow h-100" style="width: 18rem;">
+                    <h4 class="card-title text-muted" style="text-align:center;">@Product.ProductName</h4>
+                    <img class="card-img-top" src="@Url.Content("~/img/" + Product.ImageFileName)" alt="Item Image">
+                    <div class="card-body">
+                        @*<h5 class="card-title">@Product.ProductName</h5>*@
+                        <p class="card-text" style="text-align:center;">@Product.ProductDescription</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Processor : @Product.Processors.ProcessorBrand @Product.Processors.ProcessorType</li>
+                        <li class="list-group-item">@Product.MemoryDevices.MemoryBrand @Product.MemoryDevices.MemoryName | @Product.VGADevices.VGABrand</li>
+                        <li class="list-group-item">Rs. @Product.Price</li>
+                    </ul>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <a asp-action="Edit" asp-route-id="@Product.ProductId" class="btn btn-outline-danger btn-sm btn-block">Edit</a>
+                            </div>
+                            <div class="col-6">
+                                @*<a asp-action="Details" asp-route-id="@Product.ProductId" class="btn btn-danger btn-sm btn-block">Details</a>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+</div>

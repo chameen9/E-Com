@@ -107,26 +107,23 @@ namespace E_Com.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Products product)
         {
+            var CreatedProduct = _productService.CreateProduct(product);
+
+
+            if (CreatedProduct != null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return View();
+            }
             //string ProductId, string ProductName, string ProductDescription, string ProductCategoryId, string ProcessorTypeId, string MemoryDeviceId,string VGADeviceId,string OSId,string StorageDeviceId, string Price, IFormFile ImageFile
-            string uniqueFileName = UploadedFile(product);
+            //string uniqueFileName = UploadedFile(product);
             //var model = _productService.AddProduct(ProductId, ProductName, ProductDescription, Convert.ToInt32(ProductCategoryId), Convert.ToInt32(ProcessorTypeId), Convert.ToInt32(MemoryDeviceId), Convert.ToInt32(VGADeviceId), Convert.ToInt32(OSId), Convert.ToInt32(StorageDeviceId), Convert.ToDouble(Price), ImageFile);
-            
-            //if (model != null)
-            //{
-            //    //if (ImageFileName != null && ImageFileName.Length > 0)
-            //    //{
-            //    //    string fileName = Path.GetFileName(ImageFileName.FileName);
-            //    //    string filePath = Path.Combine(_env.WebRootPath, "images", fileName);
-            //    //    using (var fileStream = new FileStream(filePath, FileMode.Create))
-            //    //    {
-            //    //        await ImageFileName.CopyToAsync(fileStream);
-            //    //    }
-            //    //    model.ImageFileName = fileName;
-            //    //    _context.Products.Add(model);
-            //    //    _context.SaveChanges();
-            //    //}
-            //    return RedirectToAction(nameof(Index));
-            //}
+
+           
+            //return RedirectToAction(nameof(Index));
 
             return View();
         }
@@ -241,7 +238,7 @@ namespace E_Com.Controllers
         {
           return (_context.Products?.Any(e => e.ProductId == id)).GetValueOrDefault();
         }
-
+         
         public string UploadedFile (Products product)
         {
             string uniqueFileName = null;

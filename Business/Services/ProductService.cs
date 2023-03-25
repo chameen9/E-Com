@@ -3,6 +3,7 @@ using E_Com.Data;
 using E_Com.Models.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 
 namespace E_Com.Business.Services
 {
@@ -15,6 +16,29 @@ namespace E_Com.Business.Services
         {
             _context = context;
             _env = env;
+        }
+        public Products CreateProduct(Products products)
+        {
+            products.CreatedAt = DateTime.Now;
+
+            var thisCategory = _context.ProductCategory.Where(x => x.ProductCategoryId == products.ProductCategoryId).FirstOrDefault();
+            products.ProductCategory = thisCategory;
+            var thisProcessor = _context.Processors.Where(x => x.ProcessorTypeId == products.ProcessorTypeId).FirstOrDefault();
+            products.Processors = thisProcessor;
+            var thisMemory = _context.MemoryDevices.Where(x => x.MemoryDeviceId == products.MemoryDeviceId).FirstOrDefault();
+            products.MemoryDevices = thisMemory;
+            var thisVGA = _context.VGADevices.Where(x => x.VGADeviceId == products.VGADeviceId).FirstOrDefault();
+            products.VGADevices = thisVGA;
+            var thisOS = _context.OperatingSytems.Where(x => x.OSId == products.OSId).FirstOrDefault();
+            products.OperatingSytems = thisOS;
+            var thisStorage = _context.StorageDevices.Where(x => x.StorageDeviceId == products.StorageDeviceId).FirstOrDefault();
+            products.StorageDevices = thisStorage;
+
+            products.ImageFileName = UploadedFile(products);
+            _context.Products.Add(products);
+            _context.SaveChanges();
+
+            return products;
         }
 
         public Products AddProduct(string ProductId, string ProductName, string ProductDescription, int ProductCategoryId, int ProcessorTypeId, int MemoryDeviceId, int VGADeviceId, int OSId, int StorageDeviceId, double Price, IFormFile ImageFile)
@@ -152,6 +176,22 @@ namespace E_Com.Business.Services
                 return null;
             }
             return product;
+        }
+
+        public string UploadedFile(Products product)
+        {
+            string uniqueFileName = null;
+            if (product.ImageFile != null)
+            {
+                string uploadsFolder = Path.Combine(_env.WebRootPath, "img");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + product.ImageFile.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    product.ImageFile.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
         }
     }
 }
