@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "spTCAoKjabtqCoz7fCcjNVuEoonJPp8r9Caxxh6EO60=",
+  "Hash": "/XhmfIOGJhNp8Qe7eY0dbBZwUXoZYSfYWoS/Ar2BvDo=",
   "Source": "E-Com",
   "BasePath": "_content/E-Com",
   "Mode": "Default",
@@ -1103,6 +1103,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "D:\\Beng (Hons)\\AD\\CourseWork 2\\E-Com\\E-Com\\wwwroot\\images\\d4d2abc8-3c5a-4e76-b61e-03bada8f8e9c_Screenshot 2023-03-17 152308.png",
+      "SourceId": "E-Com",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Beng (Hons)\\AD\\CourseWork 2\\E-Com\\E-Com\\wwwroot\\",
+      "BasePath": "_content/E-Com",
+      "RelativePath": "images/d4d2abc8-3c5a-4e76-b61e-03bada8f8e9c_Screenshot 2023-03-17 152308.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\d4d2abc8-3c5a-4e76-b61e-03bada8f8e9c_Screenshot 2023-03-17 152308.png"
     },
     {
       "Identity": "D:\\Beng (Hons)\\AD\\CourseWork 2\\E-Com\\E-Com\\wwwroot\\js\\site.js",

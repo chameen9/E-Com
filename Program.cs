@@ -25,8 +25,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IProductService,ProductService>();
 builder.Services.AddScoped<IMemoryDeviceService,MemoryDeviceService>();
 builder.Services.AddScoped<IOSService,OSService>();
-builder.Services.AddScoped<IProcessorSrvice,ProcessorSrvice>();
-builder.Services.AddScoped<IStraogeServices, StraogeServices>();
+builder.Services.AddScoped<IProcessorService,ProcessorService>();
+builder.Services.AddScoped<IProductCategoryService,ProductCategoryService>();
+builder.Services.AddScoped<IStorageDevicesService, StorageDevicesService>();
 builder.Services.AddScoped<IVGAService, VGAService>();
 
 

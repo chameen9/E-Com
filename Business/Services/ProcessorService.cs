@@ -4,11 +4,11 @@ using E_Com.Models.Data;
 
 namespace E_Com.Business.Services
 {
-    public class ProcessorSrvice : IProcessorSrvice
+    public class ProcessorService : IProcessorService
     {
         private readonly ApplicationDbContext _context;
 
-        public ProcessorSrvice(ApplicationDbContext context)
+        public ProcessorService(ApplicationDbContext context)
         {
             _context = context;
         }

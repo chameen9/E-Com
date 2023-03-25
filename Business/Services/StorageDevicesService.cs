@@ -1,19 +1,19 @@
 ﻿using E_Com.Business.Interfaces;
-using E_Com.Data;
 using E_Com.Models.Data;
+using E_Com.Data;
 
 namespace E_Com.Business.Services
 {
-    public class StraogeServices : IStraogeServices
+    public class StorageDevicesService : IStorageDevicesService
     {
         private readonly ApplicationDbContext _context;
 
-        public StraogeServices(ApplicationDbContext context)
+        public StorageDevicesService(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public List<StorageDevices> GetAllStorageDevices()
+        public List<Models.Data.StorageDevices> GetAllStorageDevices()
         {
             return _context.StorageDevices.ToList();
         }

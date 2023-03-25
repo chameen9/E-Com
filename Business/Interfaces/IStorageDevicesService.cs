@@ -2,7 +2,7 @@
 
 namespace E_Com.Business.Interfaces
 {
-    public interface IStraogeServices
+    public interface IStorageDevicesService
     {
         List<StorageDevices> GetAllStorageDevices();
     }

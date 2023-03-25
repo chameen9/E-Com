@@ -6,5 +6,6 @@
         public string ProductCategoryName { get; set;}
         public string? ProductCategoryDescription { get; set;}
 
+        public List<Products> Products { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using E_Com.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Com.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230322101155_changeProducts")]
+    partial class changeProducts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,10 +135,6 @@ namespace E_Com.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("ImageFileName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<int>("MemoryDeviceId")
                         .HasColumnType("int");
 
@@ -145,9 +143,6 @@ namespace E_Com.Migrations
 
                     b.Property<int>("OSId")
                         .HasColumnType("int");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("double");
 
                     b.Property<int>("ProcessorTypeId")
                         .HasColumnType("int");
@@ -192,15 +187,15 @@ namespace E_Com.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("StorageDeviceCapacity")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("StorageDeviceName")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("StorageDeviceType")
+                    b.Property<string>("StrageDeviceCapacity")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("StrageDeviceType")
                         .IsRequired()
                         .HasColumnType("longtext");
 

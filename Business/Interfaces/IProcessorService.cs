@@ -2,7 +2,7 @@
 
 namespace E_Com.Business.Interfaces
 {
-    public interface IProcessorSrvice
+    public interface IProcessorService
     {
         List<Processors> GetAllProcessors();
     }

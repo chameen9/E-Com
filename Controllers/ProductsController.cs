@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using E_Com.Data;
 using E_Com.Models.Data;
+using E_Com.Business.Interfaces;
+using System.Security.Cryptography;
+
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace E_Com.Controllers
 {
@@ -14,16 +19,46 @@ namespace E_Com.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public ProductsController(ApplicationDbContext context)
+        private readonly IWebHostEnvironment _env;
+
+        public IMemoryDeviceService _memoryDeviceService;
+        public IOSService _osService;
+        public IProcessorService _processorService;
+        public IProductCategoryService _productCategoryService;
+        public IStorageDevicesService _storageDevices;
+        public IVGAService _vgaService;
+
+        public IProductService _productService;
+
+        public ProductsController(
+            ApplicationDbContext context, 
+            IMemoryDeviceService memoryDeviceService, 
+            IOSService osService, 
+            IProcessorService processorService,
+            IProductCategoryService productCategoryService,
+            IStorageDevicesService storageDevices,
+            IVGAService vgaService,
+            IProductService productService,
+            IWebHostEnvironment env
+            )
         {
             _context = context;
+            _memoryDeviceService = memoryDeviceService;
+            _osService = osService;
+            _processorService = processorService;
+            _productCategoryService = productCategoryService;
+            _storageDevices = storageDevices;
+            _vgaService = vgaService;
+            _productService = productService;
+            _env = env;
         }
 
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Products.Include(p => p.MemoryDevices).Include(p => p.OperatingSytems).Include(p => p.Processors).Include(p => p.ProductCategory).Include(p => p.StorageDevices).Include(p => p.VGADevices);
-            return View(await applicationDbContext.ToListAsync());
+            ViewData["ProductsList"] = _productService.GetAllProducts();
+
+            return View();
         }
 
         // GET: Products/Details/5
@@ -51,15 +86,18 @@ namespace E_Com.Controllers
         }
 
         // GET: Products/Create
+        [HttpGet]
         public IActionResult Create()
         {
-            ViewData["MemoryDeviceId"] = new SelectList(_context.MemoryDevices, "MemoryDeviceId", "MemoryDeviceId");
-            ViewData["OSId"] = new SelectList(_context.OperatingSytems, "OSId", "OSId");
-            ViewData["ProcessorTypeId"] = new SelectList(_context.Processors, "ProcessorTypeId", "ProcessorTypeId");
-            ViewData["ProductCategoryId"] = new SelectList(_context.ProductCategory, "ProductCategoryId", "ProductCategoryId");
-            ViewData["StorageDeviceId"] = new SelectList(_context.StorageDevices, "StorageDeviceId", "StorageDeviceId");
-            ViewData["VGADeviceId"] = new SelectList(_context.VGADevices, "VGADeviceId", "VGADeviceId");
-            return View();
+            ViewData["MemoryDeviceList"] = _memoryDeviceService.GetAllMemoryDevices();
+            ViewData["OperatingSystemsList"] = _osService.GetAllOperatingSystems();
+            ViewData["ProcessorsList"] = _processorService.GetAllProcessors();
+            ViewData["ProductCategoriesList"] = _productCategoryService.GetAllProductCategories();
+            ViewData["StorageDevicesList"] = _storageDevices.GetAllStorageDevices();
+            ViewData["VGADevicesList"] = _vgaService.GetAllVGADevices();
+            var product = new Products();
+
+            return View(product);
         }
 
         // POST: Products/Create
@@ -67,21 +105,30 @@ namespace E_Com.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,ProductName,ProductDescription,ProductCategoryId,ProcessorTypeId,MemoryDeviceId,VGADeviceId,OSId,StorageDeviceId,CreatedAt,ModifiedAt,DeletedAt")] Products products)
+        public async Task<IActionResult> Create(Products product)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(products);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["MemoryDeviceId"] = new SelectList(_context.MemoryDevices, "MemoryDeviceId", "MemoryDeviceId", products.MemoryDeviceId);
-            ViewData["OSId"] = new SelectList(_context.OperatingSytems, "OSId", "OSId", products.OSId);
-            ViewData["ProcessorTypeId"] = new SelectList(_context.Processors, "ProcessorTypeId", "ProcessorTypeId", products.ProcessorTypeId);
-            ViewData["ProductCategoryId"] = new SelectList(_context.ProductCategory, "ProductCategoryId", "ProductCategoryId", products.ProductCategoryId);
-            ViewData["StorageDeviceId"] = new SelectList(_context.StorageDevices, "StorageDeviceId", "StorageDeviceId", products.StorageDeviceId);
-            ViewData["VGADeviceId"] = new SelectList(_context.VGADevices, "VGADeviceId", "VGADeviceId", products.VGADeviceId);
-            return View(products);
+            //string ProductId, string ProductName, string ProductDescription, string ProductCategoryId, string ProcessorTypeId, string MemoryDeviceId,string VGADeviceId,string OSId,string StorageDeviceId, string Price, IFormFile ImageFile
+            string uniqueFileName = UploadedFile(product);
+            //var model = _productService.AddProduct(ProductId, ProductName, ProductDescription, Convert.ToInt32(ProductCategoryId), Convert.ToInt32(ProcessorTypeId), Convert.ToInt32(MemoryDeviceId), Convert.ToInt32(VGADeviceId), Convert.ToInt32(OSId), Convert.ToInt32(StorageDeviceId), Convert.ToDouble(Price), ImageFile);
+            
+            //if (model != null)
+            //{
+            //    //if (ImageFileName != null && ImageFileName.Length > 0)
+            //    //{
+            //    //    string fileName = Path.GetFileName(ImageFileName.FileName);
+            //    //    string filePath = Path.Combine(_env.WebRootPath, "images", fileName);
+            //    //    using (var fileStream = new FileStream(filePath, FileMode.Create))
+            //    //    {
+            //    //        await ImageFileName.CopyToAsync(fileStream);
+            //    //    }
+            //    //    model.ImageFileName = fileName;
+            //    //    _context.Products.Add(model);
+            //    //    _context.SaveChanges();
+            //    //}
+            //    return RedirectToAction(nameof(Index));
+            //}
+
+            return View();
         }
 
         // GET: Products/Edit/5
@@ -178,7 +225,7 @@ namespace E_Com.Controllers
         {
             if (_context.Products == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Products'  is null.");
+                return Problem("Product is null.");
             }
             var products = await _context.Products.FindAsync(id);
             if (products != null)
@@ -193,6 +240,22 @@ namespace E_Com.Controllers
         private bool ProductsExists(string id)
         {
           return (_context.Products?.Any(e => e.ProductId == id)).GetValueOrDefault();
+        }
+
+        public string UploadedFile (Products product)
+        {
+            string uniqueFileName = null;
+            if (product.ImageFile != null)
+            {
+                string uploadsFolder = Path.Combine(_env.WebRootPath, "images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + product.ImageFile.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using(var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    product.ImageFile.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
         }
     }
 }

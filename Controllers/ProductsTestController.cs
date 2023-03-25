@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using E_Com.Data;
 using E_Com.Models.Data;
+using E_Com.Business.Interfaces;
 
 namespace E_Com.Controllers
 {
     public class ProductsTestController : Controller
     {
         private readonly ApplicationDbContext _context;
+        public IProductService _productService;
+        public IMemoryDeviceService _memoryDeviceService;
 
-        public ProductsTestController(ApplicationDbContext context)
+        public ProductsTestController(ApplicationDbContext context, IProductService productService, IMemoryDeviceService memoryDeviceService)
         {
             _context = context;
+            _productService = productService;
+            _memoryDeviceService = memoryDeviceService;
         }
 
         // GET: ProductsTest
@@ -52,6 +57,7 @@ namespace E_Com.Controllers
         // GET: ProductsTest/Create
         public IActionResult Create()
         {
+            ViewData["MemoryDevicesList"] = _memoryDeviceService.GetAllMemoryDevices();
             ViewData["MemoryDeviceId"] = new SelectList(_context.MemoryDevices, "MemoryDeviceId", "MemoryDeviceId");
             ViewData["OSId"] = new SelectList(_context.OperatingSytems, "OSId", "OSId");
             ViewData["ProcessorTypeId"] = new SelectList(_context.Processors, "ProcessorTypeId", "ProcessorTypeId");

@@ -17,18 +17,18 @@ namespace E_Com.Controllers
         private readonly IProductService _productService;
         private readonly IMemoryDeviceService _memoryDeviceService;
         private readonly IOSService _operatingSystemService;
-        private readonly IProcessorSrvice _processorService;
-        private readonly IStraogeServices _straogeServices;
+        private readonly IProcessorService _processorService;
+        //private readonly IStorageDevicesServices _straogeServices;
         private readonly IVGAService _vgaServices;
 
-        public TestController(IProductService productService, IMemoryDeviceService memoryDeviceService, IOSService operatingSystemService, IProcessorSrvice processorService, IStraogeServices straogeServices, IVGAService vgaServices)
+        public TestController(IProductService productService, IMemoryDeviceService memoryDeviceService, IOSService operatingSystemService, IProcessorService processorService, IVGAService vgaServices)
         {
             _productService = productService;
             _memoryDeviceService = memoryDeviceService;
             _operatingSystemService = operatingSystemService;
             _operatingSystemService = operatingSystemService;
             _processorService = processorService;
-            _straogeServices = straogeServices;
+            //_straogeServices = straogeServices;
             _vgaServices = vgaServices;
         }
 
@@ -60,7 +60,7 @@ namespace E_Com.Controllers
             ViewData["MemoryDeviceId"] = new SelectList(_memoryDeviceService.GetAllMemoryDevices(), "MemoryDeviceId", "MemoryDeviceId");
             ViewData["OSId"] = new SelectList(_operatingSystemService.GetAllOperatingSystems(), "OSId", "OSId");
             ViewData["ProcessorTypeId"] = new SelectList(_processorService.GetAllProcessors(), "ProcessorTypeId", "ProcessorTypeId");
-            ViewData["StorageDeviceId"] = new SelectList(_straogeServices.GetAllStorageDevices(), "StorageDeviceId", "StorageDeviceId");
+            //ViewData["StorageDeviceId"] = new SelectList(_straogeServices.GetAllStorageDevices(), "StorageDeviceId", "StorageDeviceId");
             ViewData["VGADeviceId"] = new SelectList(_vgaServices.GetAllVGADevices(), "VGADeviceId", "VGADeviceId");
 
             return View();
@@ -78,9 +78,9 @@ namespace E_Com.Controllers
             //    _productService.AddProduct(products);
             //    return RedirectToAction(nameof(Index));
             //}
-            _productService.AddProduct(products);
-            return RedirectToAction(nameof(Index));
-            //return View(products);
+            //_productService.AddProduct(products);
+            //return RedirectToAction(nameof(Index));
+            return View(products);
 
         }
 

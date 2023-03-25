@@ -3,6 +3,7 @@ using System;
 using E_Com.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Com.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230322095128_addRelations")]
+    partial class addRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,11 +135,10 @@ namespace E_Com.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("ImageFileName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<int>("MemoryDeviceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MemoryDevicesMemoryDeviceId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("ModifiedAt")
@@ -146,10 +147,13 @@ namespace E_Com.Migrations
                     b.Property<int>("OSId")
                         .HasColumnType("int");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("double");
+                    b.Property<int>("OperatingSytemsOSId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ProcessorTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProcessorsProcessorTypeId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductCategoryId")
@@ -166,22 +170,28 @@ namespace E_Com.Migrations
                     b.Property<int>("StorageDeviceId")
                         .HasColumnType("int");
 
+                    b.Property<int>("StorageDevicesStorageDeviceId")
+                        .HasColumnType("int");
+
                     b.Property<int>("VGADeviceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VGADevicesVGADeviceId")
                         .HasColumnType("int");
 
                     b.HasKey("ProductId");
 
-                    b.HasIndex("MemoryDeviceId");
+                    b.HasIndex("MemoryDevicesMemoryDeviceId");
 
-                    b.HasIndex("OSId");
+                    b.HasIndex("OperatingSytemsOSId");
 
-                    b.HasIndex("ProcessorTypeId");
+                    b.HasIndex("ProcessorsProcessorTypeId");
 
                     b.HasIndex("ProductCategoryId");
 
-                    b.HasIndex("StorageDeviceId");
+                    b.HasIndex("StorageDevicesStorageDeviceId");
 
-                    b.HasIndex("VGADeviceId");
+                    b.HasIndex("VGADevicesVGADeviceId");
 
                     b.ToTable("Products");
                 });
@@ -192,15 +202,15 @@ namespace E_Com.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("StorageDeviceCapacity")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("StorageDeviceName")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("StorageDeviceType")
+                    b.Property<string>("StrageDeviceCapacity")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("StrageDeviceType")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -488,19 +498,19 @@ namespace E_Com.Migrations
                 {
                     b.HasOne("E_Com.Models.Data.MemoryDevices", "MemoryDevices")
                         .WithMany("Products")
-                        .HasForeignKey("MemoryDeviceId")
+                        .HasForeignKey("MemoryDevicesMemoryDeviceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("E_Com.Models.Data.OperatingSytems", "OperatingSytems")
                         .WithMany("Products")
-                        .HasForeignKey("OSId")
+                        .HasForeignKey("OperatingSytemsOSId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("E_Com.Models.Data.Processors", "Processors")
                         .WithMany("Products")
-                        .HasForeignKey("ProcessorTypeId")
+                        .HasForeignKey("ProcessorsProcessorTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -512,13 +522,13 @@ namespace E_Com.Migrations
 
                     b.HasOne("E_Com.Models.Data.StorageDevices", "StorageDevices")
                         .WithMany("Products")
-                        .HasForeignKey("StorageDeviceId")
+                        .HasForeignKey("StorageDevicesStorageDeviceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("E_Com.Models.Data.VGADevices", "VGADevices")
                         .WithMany("Products")
-                        .HasForeignKey("VGADeviceId")
+                        .HasForeignKey("VGADevicesVGADeviceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

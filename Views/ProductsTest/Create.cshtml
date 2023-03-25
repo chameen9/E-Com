@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    dynamic? MemoryDevicesList = ViewData["MemoryDevicesList"];
 }
 
 <h1>Create</h1>
@@ -30,6 +31,12 @@
                 <label asp-for="MemoryDeviceId" class="control-label"></label>
                 <select asp-for="MemoryDeviceId" class ="form-control" asp-items="ViewBag.MemoryDeviceId"></select>
             </div>
+            <select name="MemoryDeviceId" class="form-control">
+                @foreach (var MemoryDevice in MemoryDevicesList)
+                {
+                    <option value="@MemoryDevice.MemoryDeviceId">@MemoryDevice.MemoryBrand @MemoryDevice.MemoryName @MemoryDevice.MemoryType @MemoryDevice.MemoryCapacity</option>
+                }
+            </select>
             <div class="form-group">
                 <label asp-for="VGADeviceId" class="control-label"></label>
                 <select asp-for="VGADeviceId" class ="form-control" asp-items="ViewBag.VGADeviceId"></select>

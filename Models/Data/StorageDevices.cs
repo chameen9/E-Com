@@ -7,7 +7,8 @@ namespace E_Com.Models.Data
         [Key]
         public int StorageDeviceId { get; set; }
         public string StorageDeviceName { get; set; }
-        public string StrageDeviceType { get; set; }
-        public string StrageDeviceCapacity { get; set;}
+        public string StorageDeviceType { get; set; }
+        public string StorageDeviceCapacity { get; set;}
+        public List<Products> Products { get; set; }
     }
 }

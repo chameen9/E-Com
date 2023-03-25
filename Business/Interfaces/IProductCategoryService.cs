@@ -1,0 +1,9 @@
+﻿using E_Com.Models.Data;
+
+namespace E_Com.Business.Interfaces
+{
+    public interface IProductCategoryService
+    {
+        public List<ProductCategory> GetAllProductCategories();
+    }
+}
