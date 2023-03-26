@@ -1,0 +1,105 @@
+﻿@model IEnumerable<E_Com.Models.Data.Products>
+
+@{
+    ViewData["Title"] = "Index";
+    dynamic? ProductsList = ViewData["ProductsList"];
+}
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-danger">Add New Product <i class="fa fa-plus"></i> </a>
+</p>
+<table class="table table-hover table-striped">
+    <thead>
+    <tr>
+    <th>Product Id</th>
+    @*<th>Image</th>*@
+    <th>
+    Name
+    </th>
+    <th>
+    Description
+    </th>
+    <th>
+    Type
+    </th>
+    <th>
+    Processor
+    </th>
+    <th>
+    Memory
+    </th>
+    <th>
+    VGA
+    </th>
+    <th>
+    OS
+    </th>
+    <th>
+    Storage
+    </th>
+    <th>
+    Price(Rs)
+    </th>
+    <th>
+    Actions
+    </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var Product in ProductsList)
+    {
+    <tr>
+    <td>@Product.ProductId</td>
+    @*<td><img src="@Url.Content("~/img/" + Product.ImageFileName)" height="100px" width="100px" alt="Product Image"/></td>*@
+    <td>@Product.ProductName</td>
+    <td>@Product.ProductDescription</td>
+    <td>@Product.ProductCategory.ProductCategoryName</td>
+    <td>@Product.Processors.ProcessorBrand @Product.Processors.ProcessorType</td>
+    <td>@Product.MemoryDevices.MemoryBrand @Product.MemoryDevices.MemoryName</td>
+    <td>@Product.VGADevices.VGABrand</td>
+    <td>@Product.OperatingSytems.OSBrand @Product.OperatingSytems.OSVersion</td>
+    <td>@Product.StorageDevices.StorageDeviceName @Product.StorageDevices.StorageDeviceCapacity</td>
+    <td>@Product.Price</td>
+    <td>
+        <a asp-action="Edit" asp-route-id="@Product.ProductId" class="link-success"><i class="fa fa-pencil" title="Edit"></i></a>
+        <a asp-action="Details" asp-route-id="@Product.ProductId" class="link-info"><i class="fa-sharp fa-solid fa-eye" title="View"></i></a>
+        <a asp-action="Delete" asp-route-id="@Product.ProductId" class="link-danger"><i class="fa fa-trash" title="Delete"></i></a>
+    </td>
+    </tr>
+    }
+    </tbody>
+
+</table>
+
+<div class="row">
+    @*@foreach (var Product in ProductsList)
+    {
+        <div class="col-3 mb-4">
+            <a asp-action="Details" asp-route-id="@Product.ProductId" class="text-body" style="text-decoration:none">
+                <div class="card shadow h-100" style="width: 18rem;">
+                    <h4 class="card-title text-muted" style="text-align:center;">@Product.ProductName</h4>
+                    <img class="card-img-top" src="@Url.Content("~/img/" + Product.ImageFileName)" alt="Item Image">
+                    <div class="card-body">
+                        <h5 class="card-title">@Product.ProductName</h5>
+                        <p class="card-text" style="text-align:center;">@Product.ProductDescription</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Processor : @Product.Processors.ProcessorBrand @Product.Processors.ProcessorType</li>
+                        <li class="list-group-item">@Product.MemoryDevices.MemoryBrand @Product.MemoryDevices.MemoryName | @Product.VGADevices.VGABrand</li>
+                        <li class="list-group-item">Rs. @Product.Price</li>
+                    </ul>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <a asp-action="Edit" asp-route-id="@Product.ProductId" class="btn btn-outline-danger btn-sm btn-block">Edit</a>
+                            </div>
+                            <div class="col-6">
+                                <a asp-action="Details" asp-route-id="@Product.ProductId" class="btn btn-danger btn-sm btn-block">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }*@
+</div>

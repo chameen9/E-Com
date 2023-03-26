@@ -2,7 +2,26 @@
 
 @{
     ViewData["Title"] = "Details";
+    dynamic? Product = ViewData["Product"];
 }
+
+<style>
+    .image-frame {
+        width: 400px;
+        height: 400px;
+        border: 0px solid #ccc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .image-frame img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+</style>
+
 
 <h1>Details</h1>
 
@@ -10,72 +29,84 @@
     <h4>Products</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductDescription)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductDescription)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProductCategory)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProductCategory.ProductCategoryId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Processors)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Processors.ProcessorTypeId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MemoryDevices)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MemoryDevices.MemoryDeviceId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VGADevices)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VGADevices.VGADeviceId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OperatingSytems)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OperatingSytems.OSId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StorageDevices)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StorageDevices.StorageDeviceId)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CreatedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CreatedAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ModifiedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ModifiedAt)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DeletedAt)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DeletedAt)
-        </dd>
+        <div class="col-6">
+            <div class="image-frame shadow">
+                <img src="@Url.Content("~/img/" + Product.ImageFileName)" height="200px" height="400px" width="400px" />
+            </div>
+            
+        </div>
+        <div class="col-6">
+            <table class="table-borderless">
+                <thead>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Product ID</th>
+                        <td>:</td>
+                        <td>@Product.ProductId</td>
+                    </tr>
+                    <tr>
+                        <th>Product Name</th>
+                        <td>:</td>
+                        <td>@Product.ProductName</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>:</td>
+                        <td>@Product.ProductDescription</td>
+                    </tr>
+                    <tr>
+                        <th>Category</th>
+                        <td>:</td>
+                        <td>@Product.ProductCategory.ProductCategoryName</td>
+                    </tr>
+                    <tr>
+                        <th>Processor</th>
+                        <td>:</td>
+                        <td>@Product.Processors.ProcessorBrand @Product.Processors.ProcessorType @Product.Processors.ProcessorSpeed</td>
+                    </tr>
+                    <tr>
+                        <th>Memory</th>
+                        <td>:</td>
+                        <td>@Product.MemoryDevices.MemoryBrand @Product.MemoryDevices.MemoryName @Product.MemoryDevices.MemoryCapacity @Product.MemoryDevices.MemoryType</td>
+                    </tr>
+                    <tr>
+                        <th>VGA</th>
+                        <td>:</td>
+                        <td>@Product.VGADevices.VGABrand @Product.VGADevices.VGAVRAMSize @Product.VGADevices.VGARefreshRate</td>
+                    </tr>
+                    <tr>
+                        <th>OS</th>
+                        <td>:</td>
+                        <td>@Product.OperatingSytems.OSBrand) @Product.OperatingSytems.OSVersion) @Product.OperatingSytems.OSEdition)</td>
+                    </tr>
+                    <tr>
+                        <th>Storage</th>
+                        <td>:</td>
+                        <td>@Product.StorageDevices.StorageDeviceName) @Product.StorageDevices.StorageDeviceCapacity) @Product.StorageDevices.StorageDeviceType)</td>
+                    </tr>
+                    <tr>
+                        <td><br /></td>
+                    </tr>
+                    <tr>
+                        <td><h4 class="text-danger">Rs. @Product.Price</h4></td>
+                    </tr>
+                    <tr>
+                        <td><br /></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="submit" class="btn btn-outline-danger">Add To Cart</button>
+                            &nbsp;
+                            <button type="submit" class="btn btn-danger">Buy Now</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </dl>
 </div>
 <div>

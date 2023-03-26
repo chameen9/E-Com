@@ -64,25 +64,28 @@ namespace E_Com.Controllers
         // GET: Products/Details/5
         public async Task<IActionResult> Details(string id)
         {
-            if (id == null || _context.Products == null)
-            {
-                return NotFound();
-            }
+            var product = _productService.GetProductById(id);
+            ViewData["Product"] = _productService.GetProductById(id);
 
-            var products = await _context.Products
-                .Include(p => p.MemoryDevices)
-                .Include(p => p.OperatingSytems)
-                .Include(p => p.Processors)
-                .Include(p => p.ProductCategory)
-                .Include(p => p.StorageDevices)
-                .Include(p => p.VGADevices)
-                .FirstOrDefaultAsync(m => m.ProductId == id);
-            if (products == null)
-            {
-                return NotFound();
-            }
+            //if (id == null || _context.Products == null)
+            //{
+            //    return NotFound();
+            //}
 
-            return View(products);
+            //var products = await _context.Products
+            //    .Include(p => p.MemoryDevices)
+            //    .Include(p => p.OperatingSytems)
+            //    .Include(p => p.Processors)
+            //    .Include(p => p.ProductCategory)
+            //    .Include(p => p.StorageDevices)
+            //    .Include(p => p.VGADevices)
+            //    .FirstOrDefaultAsync(m => m.ProductId == id);
+            //if (products == null)
+            //{
+            //    return NotFound();
+            //}
+
+            return View(product);
         }
 
         // GET: Products/Create

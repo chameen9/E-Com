@@ -77,7 +77,7 @@ namespace E_Com.Business.Services
                 var thisStorage = _context.StorageDevices.Where(x => x.StorageDeviceId == StorageDeviceId).FirstOrDefault();
                 product.StorageDevices = thisStorage;
 
-                product.ImageFileName = "dump";
+                //product.ImageFileName = "dump";
                 _context.Products.Add(product);
                 _context.SaveChanges();
 

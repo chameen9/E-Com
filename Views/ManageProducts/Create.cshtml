@@ -1,0 +1,134 @@
+﻿@model E_Com.Models.Data.Products
+
+@{
+    ViewData["Title"] = "Create";
+    dynamic? MemoryDeviceList = ViewData["MemoryDeviceList"];
+    dynamic? OperatingSystemsList = ViewData["OperatingSystemsList"];
+    dynamic? ProcessorsList = ViewData["ProcessorsList"];
+    dynamic? ProductCategoriesList = ViewData["ProductCategoriesList"];
+    dynamic? StorageDevicesList = ViewData["StorageDevicesList"];
+    dynamic? VGADevicesList = ViewData["VGADevicesList"];
+}
+
+<h1>Create</h1>
+
+<h4>Products</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ImageFile">Image</label>
+                <div class="custom-file">
+                    <input asp-for="ImageFile" class="form-control" onchange="document.getElementById('ImageFilePrv').src = window.URL.createObjectURL(this.files[0])" />
+                    @*<label class="custom-file-label" for="FLImageFile">Choose File</label>*@
+                </div>
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+                @*<input type="file" name="ImageFile" id="ImageFile" class="form-control"  />*@
+            </div>
+            <div class="form-group">
+                <img src="" id="ImageFilePrv" width="150" height="150" style="border:1px; margin-top:20px; margin-left:120px;" />
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductId" class="control-label"></label>
+                <input asp-for="ProductId" class="form-control" />
+                <span asp-validation-for="ProductId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductName" class="control-label"></label>
+                <input asp-for="ProductName" class="form-control" />
+                <span asp-validation-for="ProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductDescription" class="control-label"></label>
+                <input asp-for="ProductDescription" class="form-control" />
+                <span asp-validation-for="ProductDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="ProductCategoryId" class="control-label">Category</label>
+                @*<select asp-for="ProductCategoryId" class ="form-control" asp-items="ViewBag.ProductCategoryId"></select>*@
+                <select name="ProductCategoryId" class="form-control">
+                    @foreach (var Category in ProductCategoriesList)
+                    {
+                        <option value="@Category.ProductCategoryId">@Category.ProductCategoryName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="ProcessorTypeId" class="control-label">Processor</label>
+                @*<select asp-for="ProcessorTypeId" class ="form-control" asp-items="ViewBag.ProcessorTypeId"></select>*@
+                <select name="ProcessorTypeId" class="form-control">
+                    @foreach (var Processor in ProcessorsList)
+                    {
+                        <option value="@Processor.ProcessorTypeId">@Processor.ProcessorBrand @Processor.ProcessorType @Processor.ProcessorGeneration @Processor.ProcessorSpeed</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="MemoryDeviceId" class="control-label">Memory</label>
+                @*<select asp-for="MemoryDeviceId" class ="form-control" asp-items="ViewBag.MemoryDeviceId"></select>*@
+                <select name="MemoryDeviceId" class="form-control">
+                    @foreach (var MemoryDevice in MemoryDeviceList)
+                    {
+                        <option value="@MemoryDevice.MemoryDeviceId">@MemoryDevice.MemoryBrand @MemoryDevice.MemoryName @MemoryDevice.MemoryType @MemoryDevice.MemoryCapacity</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="VGADeviceId" class="control-label">VGA</label>
+                @*<select asp-for="VGADeviceId" class ="form-control" asp-items="ViewBag.VGADeviceId"></select>*@
+                <select name="VGADeviceId" class="form-control">
+                    @foreach (var VGADevice in VGADevicesList)
+                    {
+                        <option value="@VGADevice.VGADeviceId">@VGADevice.VGABrand @VGADevice.VGAVRAMSize @VGADevice.VGARefreshRate</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="OSId" class="control-label">Operating System</label>
+                @*<select asp-for="OSId" class ="form-control" asp-items="ViewBag.OSId"></select>*@
+                <select name="OSId" class="form-control">
+                    @foreach (var OS in OperatingSystemsList)
+                    {
+                        <option value="@OS.OSId">@OS.OSBrand @OS.OSVersion @OS.OSEdition</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="StorageDeviceId" class="control-label">Storage Type</label>
+                @*<select asp-for="StorageDeviceId" class ="form-control" asp-items="ViewBag.StorageDeviceId"></select>*@
+                <select name="StorageDeviceId" class="form-control">
+                    @foreach (var Storage in StorageDevicesList)
+                    {
+                        <option value="@Storage.StorageDeviceId">@Storage.StorageDeviceName @Storage.StorageDeviceCapacity (@Storage.StorageDeviceType)</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Price" class="control-label">Price</label>
+                <input name="Price" class="form-control" type="text" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script type="text/javascript">
+        $(".custom-file-input").on("change", function () {
+            var filename = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(filename);
+        })
+    </script>
+}
