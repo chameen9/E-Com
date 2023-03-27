@@ -23,10 +23,10 @@
 </style>
 
 
-<h1>Details</h1>
+@*<h1>Details</h1>*@
 
 <div>
-    <h4>Products</h4>
+    <h4>@Product.ProductName Product Description</h4>
     <hr />
     <dl class="row">
         <div class="col-6">
@@ -81,12 +81,12 @@
                     <tr>
                         <th>OS</th>
                         <td>:</td>
-                        <td>@Product.OperatingSytems.OSBrand) @Product.OperatingSytems.OSVersion) @Product.OperatingSytems.OSEdition)</td>
+                        <td>@Product.OperatingSytems.OSBrand @Product.OperatingSytems.OSVersion @Product.OperatingSytems.OSEdition</td>
                     </tr>
                     <tr>
                         <th>Storage</th>
                         <td>:</td>
-                        <td>@Product.StorageDevices.StorageDeviceName) @Product.StorageDevices.StorageDeviceCapacity) @Product.StorageDevices.StorageDeviceType)</td>
+                        <td>@Product.StorageDevices.StorageDeviceName @Product.StorageDevices.StorageDeviceCapacity @Product.StorageDevices.StorageDeviceType</td>
                     </tr>
                     <tr>
                         <td><br /></td>
@@ -110,6 +110,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.ProductId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @*<a asp-action="Edit" asp-route-id="@Model?.ProductId">Edit</a> |*@
+    <a asp-action="Index">Go Back</a>
 </div>

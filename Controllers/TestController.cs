@@ -110,7 +110,7 @@ namespace E_Com.Controllers
         {
             if (product != null)
             {
-                _productService.EditProduct(product);
+                //_productService.EditProduct(product);
                 return RedirectToAction("Index");
             }
             else

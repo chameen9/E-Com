@@ -2,84 +2,121 @@
 
 @{
     ViewData["Title"] = "Edit";
+    dynamic? MemoryDeviceList = ViewData["MemoryDeviceList"];
+    dynamic? OperatingSystemsList = ViewData["OperatingSystemsList"];
+    dynamic? ProcessorsList = ViewData["ProcessorsList"];
+    dynamic? ProductCategoriesList = ViewData["ProductCategoriesList"];
+    dynamic? StorageDevicesList = ViewData["StorageDevicesList"];
+    dynamic? VGADevicesList = ViewData["VGADevicesList"];
+    dynamic? Product = ViewData["Product"];
 }
 
-<h1>Edit</h1>
+@*<h1>Edit</h1>
 
 <h4>Products</h4>
-<hr />
+<hr />*@
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+    <div class="col-12">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ProductId" />
-            <div class="form-group">
-                <label asp-for="ProductName" class="control-label"></label>
-                <input asp-for="ProductName" class="form-control" />
-                <span asp-validation-for="ProductName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProductDescription" class="control-label"></label>
-                <input asp-for="ProductDescription" class="form-control" />
-                <span asp-validation-for="ProductDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProductCategoryId" class="control-label"></label>
-                <select asp-for="ProductCategoryId" class="form-control" asp-items="ViewBag.ProductCategoryId"></select>
-                <span asp-validation-for="ProductCategoryId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProcessorTypeId" class="control-label"></label>
-                <select asp-for="ProcessorTypeId" class="form-control" asp-items="ViewBag.ProcessorTypeId"></select>
-                <span asp-validation-for="ProcessorTypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MemoryDeviceId" class="control-label"></label>
-                <select asp-for="MemoryDeviceId" class="form-control" asp-items="ViewBag.MemoryDeviceId"></select>
-                <span asp-validation-for="MemoryDeviceId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VGADeviceId" class="control-label"></label>
-                <select asp-for="VGADeviceId" class="form-control" asp-items="ViewBag.VGADeviceId"></select>
-                <span asp-validation-for="VGADeviceId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="OSId" class="control-label"></label>
-                <select asp-for="OSId" class="form-control" asp-items="ViewBag.OSId"></select>
-                <span asp-validation-for="OSId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StorageDeviceId" class="control-label"></label>
-                <select asp-for="StorageDeviceId" class="form-control" asp-items="ViewBag.StorageDeviceId"></select>
-                <span asp-validation-for="StorageDeviceId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageFileName" class="control-label"></label>
-                <input asp-for="ImageFileName" class="form-control" />
-                <span asp-validation-for="ImageFileName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedAt" class="control-label"></label>
-                <input asp-for="ModifiedAt" class="form-control" />
-                <span asp-validation-for="ModifiedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DeletedAt" class="control-label"></label>
-                <input asp-for="DeletedAt" class="form-control" />
-                <span asp-validation-for="DeletedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <input type="hidden" asp-for="ProductId" name="ProductId" />
+            <div class="row">
+                <div class="col-6">
+                    <p>Image :</p>
+                    <input type="file" value="@Product.ImageFile" asp-for="ImageFile" class="form-control" onchange="document.getElementById('ImageFilePrv').src = window.URL.createObjectURL(this.files[0])" />
+
+                    <img id="ImageFilePrv" src="@Url.Content("~/img/" + Product.ImageFileName)">
+                </div>
+                <div class="col-6">
+                    <div class="input-group">
+                        <input value="Name" readonly disabled class="form-control" />
+                        <input asp-for="ProductName" name="ProductName" value="@Product.ProductName" class="form-control" />
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <input value="Description" readonly disabled class="form-control" />
+                        <input asp-for="ProductDescription" name="ProductDescription" value="@Product.ProductDescription" class="form-control" />
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <input value="Category" readonly disabled class="form-control" />
+                        <select name="ProductCategoryId" class="form-control">
+                            <option value="@Product.ProductCategoryId">@Product.ProductCategory.ProductCategoryName</option>
+                            @foreach (var Category in ProductCategoriesList)
+                            {
+                                <option value="@Category.ProductCategoryId">@Category.ProductCategoryName</option>
+                            }
+                        </select>
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <input value="Processor" readonly disabled class="form-control" />
+                        <select name="ProcessorTypeId" class="form-control">
+                            <option value="@Product.ProcessorTypeId">@Product.Processors.ProcessorBrand @Product.Processors.ProcessorType @Product.Processors.ProcessorGeneration @Product.Processors.ProcessorSpeed</option>
+                            @foreach (var Processor in ProcessorsList)
+                            {
+                                <option value="@Processor.ProcessorTypeId">@Processor.ProcessorBrand @Processor.ProcessorType @Processor.ProcessorGeneration @Processor.ProcessorSpeed</option>
+                            }
+                        </select>
+                        <span asp-validation-for="ProcessorTypeId" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <input value="Memory" readonly disabled class="form-control" />
+                        <select name="MemoryDeviceId" class="form-control">
+                            <option value="@Product.MemoryDeviceId">@Product.MemoryDevices.MemoryBrand @Product.MemoryDevices.MemoryName @Product.MemoryDevices.MemoryType @Product.MemoryDevices.MemoryCapacity</option>
+                            @foreach (var MemoryDevice in MemoryDeviceList)
+                            {
+                                <option value="@MemoryDevice.MemoryDeviceId">@MemoryDevice.MemoryBrand @MemoryDevice.MemoryName @MemoryDevice.MemoryType @MemoryDevice.MemoryCapacity</option>
+                            }
+                        </select>
+                        <span asp-validation-for="MemoryDeviceId" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <input value="VGA" readonly disabled class="form-control" />
+                        <select name="VGADeviceId" class="form-control">
+                            <option value="@Product.VGADeviceId">@Product.VGADevices.VGABrand @Product.VGADevices.VGAVRAMSize @Product.VGADevices.VGARefreshRate</option>
+                            @foreach (var VGADevice in VGADevicesList)
+                            {
+                                <option value="@VGADevice.VGADeviceId">@VGADevice.VGABrand @VGADevice.VGAVRAMSize @VGADevice.VGARefreshRate</option>
+                            }
+                        </select>
+                        <span asp-validation-for="VGADeviceId" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <input value="OS" readonly disabled class="form-control" />
+                        <select name="OSId" class="form-control">
+                            <option value="@Product.OSId">@Product.OperatingSytems.OSBrand @Product.OperatingSytems.OSVersion @Product.OperatingSytems.OSEdition</option>
+                            @foreach (var OS in OperatingSystemsList)
+                            {
+                                <option value="@OS.OSId">@OS.OSBrand @OS.OSVersion @OS.OSEdition</option>
+                            }
+                        </select>
+                        <span asp-validation-for="OSId" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <input value="Storage" readonly disabled class="form-control" />
+                        <select name="StorageDeviceId" class="form-control">
+                            <option value="@Product.StorageDeviceId">@Product.StorageDevices.StorageDeviceName @Product.StorageDevices.StorageDeviceCapacity (@Product.StorageDevices.StorageDeviceType)</option>
+                            @foreach (var Storage in StorageDevicesList)
+                            {
+                                <option value="@Storage.StorageDeviceId">@Storage.StorageDeviceName @Storage.StorageDeviceCapacity (@Storage.StorageDeviceType)</option>
+                            }
+                        </select>
+                        <span asp-validation-for="StorageDeviceId" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <input value="Price (Rs.)" readonly disabled class="form-control" />
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <input type="submit" value="Save" class="btn btn-primary btn-block" />
+                </div>
             </div>
         </form>
     </div>
