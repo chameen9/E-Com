@@ -7,26 +7,34 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using E_Com.Data;
 using E_Com.Models.Data;
+using E_Com.Business.Interfaces;
+using E_Com.Business.Services;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
-namespace E_Com.Controllers
+namespace E_Com.Controllers.Admin
 {
-    public class UsersController : Controller
+    public class ManageUsersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        public IUserService _userService;
+        public IUserTypeService _userTypeService;
 
-        public UsersController(ApplicationDbContext context)
+        public ManageUsersController(ApplicationDbContext context, IUserService userService, IUserTypeService userTypeService)
         {
             _context = context;
+            _userService = userService;
+            _userTypeService = userTypeService;
         }
 
-        // GET: Users
+        // GET: ManageUsers
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.User.Include(u => u.UserTypes);
-            return View(await applicationDbContext.ToListAsync());
+            var users = _userService.GetAllUsers();
+            ViewData["UsersList"]= users;
+            return View(users);
         }
 
-        // GET: Users/Details/5
+        // GET: ManageUsers/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null || _context.User == null)
@@ -45,84 +53,60 @@ namespace E_Com.Controllers
             return View(user);
         }
 
-        // GET: Users/Create
+        // GET: ManageUsers/Create
         public IActionResult Create()
         {
-            ViewData["TypeId"] = new SelectList(_context.UserTypes, "TypeId", "TypeId");
+            ViewData["UserTypesList"] = _userTypeService.GetAllUserTypes();
             return View();
         }
 
-        // POST: Users/Create
+        // POST: ManageUsers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,Username,Paswword,TypeId,CreatedAt,ModifiedAt,DeletedAt")] User user)
+        public async Task<IActionResult> Create(User user)
         {
-            if (ModelState.IsValid)
+            var model = _userService.CreateUser(user);
+            if(model != null)
             {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TypeId"] = new SelectList(_context.UserTypes, "TypeId", "TypeId", user.TypeId);
-            return View(user);
+            return View(model);
         }
 
-        // GET: Users/Edit/5
+        // GET: ManageUsers/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
-            if (id == null || _context.User == null)
-            {
-                return NotFound();
-            }
+            ViewData["UserTypesList"] = _userTypeService.GetAllUserTypes();
 
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            ViewData["TypeId"] = new SelectList(_context.UserTypes, "TypeId", "TypeId", user.TypeId);
+            var user = _userService.GetUserById(id);
+
+            ViewData["User"] = user;
+
             return View(user);
         }
 
-        // POST: Users/Edit/5
+        // POST: ManageUsers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("UserId,Username,Paswword,TypeId,CreatedAt,ModifiedAt,DeletedAt")] User user)
+        public async Task<IActionResult> Edit(string UserId, string Username, string Paswword, int TypeId, User user)
         {
-            if (id != user.UserId)
+            if (UserId == null)
             {
-                return NotFound();
+                NotFound();
             }
-
-            if (ModelState.IsValid)
+            else
             {
-                try
-                {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.UserId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _userService.UpdateUser(UserId,Username, Paswword, TypeId);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TypeId"] = new SelectList(_context.UserTypes, "TypeId", "TypeId", user.TypeId);
             return View(user);
         }
 
-        // GET: Users/Delete/5
+        // GET: ManageUsers/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null || _context.User == null)
@@ -141,7 +125,7 @@ namespace E_Com.Controllers
             return View(user);
         }
 
-        // POST: Users/Delete/5
+        // POST: ManageUsers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)

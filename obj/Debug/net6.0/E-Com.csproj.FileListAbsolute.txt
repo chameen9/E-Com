@@ -281,3 +281,4 @@ D:\Beng (Hons)\AD\CourseWork 2\E-Com\E-Com\obj\Debug\net6.0\E-Com.pdb
 D:\Beng (Hons)\AD\CourseWork 2\E-Com\E-Com\obj\Debug\net6.0\E-Com.genruntimeconfig.cache
 D:\Beng (Hons)\AD\CourseWork 2\E-Com\E-Com\obj\Debug\net6.0\ref\E-Com.dll
 D:\Beng (Hons)\AD\CourseWork 2\E-Com\E-Com\bin\Debug\net6.0\libman.json
+D:\Beng (Hons)\AD\CourseWork 2\E-Com\E-Com\obj\Debug\net6.0\scopedcss\Views\Shared\_AdminLayout.cshtml.rz.scp.css

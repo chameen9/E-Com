@@ -1,32 +1,27 @@
-﻿@model E_Com.Models.Data.User
+﻿@model E_Com.Models.Data.ProductCategory
 
 @{
     ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h1>Details</h1>
 
 <div>
-    <h4>User</h4>
+    <h4>ProductCategory</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Username)
+            @Html.DisplayNameFor(model => model.ProductCategoryName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Username)
+            @Html.DisplayFor(model => model.ProductCategoryName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Paswword)
+            @Html.DisplayNameFor(model => model.ProductCategoryDescription)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Paswword)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserTypes)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserTypes.TypeId)
+            @Html.DisplayFor(model => model.ProductCategoryDescription)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.CreatedAt)
@@ -49,6 +44,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.UserId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.ProductCategoryId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

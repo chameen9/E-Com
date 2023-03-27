@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
     dynamic? Product = ViewData["Product"];
 }
 
@@ -25,87 +26,130 @@
 
 @*<h1>Details</h1>*@
 
-<div>
-    <h4>@Product.ProductName Product Description</h4>
-    <hr />
-    <dl class="row">
-        <div class="col-6">
-            <div class="image-frame shadow">
-                <img src="@Url.Content("~/img/" + Product.ImageFileName)" height="200px" height="400px" width="400px" />
+    <div>
+        <dl class="row">
+            <div class="col-2">
+                <div class="container-fluid">
+                    <div class="row">
+                        <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="background-color:white;">
+                            <div class="sidebar-sticky">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" asp-controller="ManageProducts" asp-action="Index">
+                                            Products
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="ManageOrders" asp-action="Index">
+                                            Orders
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="ManageCategories" asp-action="Index">
+                                            Categories
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-controller="ManageUsers" asp-action="Index">
+                                            Users
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
             </div>
+            <div class="col-10">
+                <div class="container">
+                    <h4>@Product.ProductName Product Description</h4>
+                       <hr />
+                    <div class="row">
+                        
+                        <div class="col-6">
+                        
+                        
+                        <div class="image-frame shadow">
+                            <img src="@Url.Content("~/img/" + Product.ImageFileName)" height="200px" height="400px" width="400px" />
+                        </div>
 
-        </div>
-        <div class="col-6">
-            <table class="table-borderless">
-                <thead>
-                <th></th>
-                <th></th>
-                <th></th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>Product ID</th>
-                        <td>:</td>
-                        <td>@Product.ProductId</td>
-                    </tr>
-                    <tr>
-                        <th>Product Name</th>
-                        <td>:</td>
-                        <td>@Product.ProductName</td>
-                    </tr>
-                    <tr>
-                        <th>Description</th>
-                        <td>:</td>
-                        <td>@Product.ProductDescription</td>
-                    </tr>
-                    <tr>
-                        <th>Category</th>
-                        <td>:</td>
-                        <td>@Product.ProductCategory.ProductCategoryName</td>
-                    </tr>
-                    <tr>
-                        <th>Processor</th>
-                        <td>:</td>
-                        <td>@Product.Processors.ProcessorBrand @Product.Processors.ProcessorType @Product.Processors.ProcessorSpeed</td>
-                    </tr>
-                    <tr>
-                        <th>Memory</th>
-                        <td>:</td>
-                        <td>@Product.MemoryDevices.MemoryBrand @Product.MemoryDevices.MemoryName @Product.MemoryDevices.MemoryCapacity @Product.MemoryDevices.MemoryType</td>
-                    </tr>
-                    <tr>
-                        <th>VGA</th>
-                        <td>:</td>
-                        <td>@Product.VGADevices.VGABrand @Product.VGADevices.VGAVRAMSize @Product.VGADevices.VGARefreshRate</td>
-                    </tr>
-                    <tr>
-                        <th>OS</th>
-                        <td>:</td>
-                        <td>@Product.OperatingSytems.OSBrand @Product.OperatingSytems.OSVersion @Product.OperatingSytems.OSEdition</td>
-                    </tr>
-                    <tr>
-                        <th>Storage</th>
-                        <td>:</td>
-                        <td>@Product.StorageDevices.StorageDeviceName @Product.StorageDevices.StorageDeviceCapacity @Product.StorageDevices.StorageDeviceType</td>
-                    </tr>
-                    <tr>
-                        <td><br /></td>
-                    </tr>
-                    <tr>
-                        <td><h4 class="text-danger">Rs. @Product.Price</h4></td>
-                    </tr>
-                    <tr>
-                        <td><br /></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@Model?.ProductId" class="btn btn-danger">Edit <i class="fa fa-pencil" title="Edit"></i></a>
-                            &nbsp;
-                            <a asp-action="Index" class="btn btn-outline-danger">Back to List</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </dl>
-</div>
+                    </div>
+                    <div class="col-6">
+                        <table class="table-borderless">
+                            <thead>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>Product ID</th>
+                                    <td>:</td>
+                                    <td>@Product.ProductId</td>
+                                </tr>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <td>:</td>
+                                    <td>@Product.ProductName</td>
+                                </tr>
+                                <tr>
+                                    <th>Description</th>
+                                    <td>:</td>
+                                    <td>@Product.ProductDescription</td>
+                                </tr>
+                                <tr>
+                                    <th>Category</th>
+                                    <td>:</td>
+                                    <td>@Product.ProductCategory.ProductCategoryName</td>
+                                </tr>
+                                <tr>
+                                    <th>Processor</th>
+                                    <td>:</td>
+                                    <td>@Product.Processors.ProcessorBrand @Product.Processors.ProcessorType @Product.Processors.ProcessorSpeed</td>
+                                </tr>
+                                <tr>
+                                    <th>Memory</th>
+                                    <td>:</td>
+                                    <td>@Product.MemoryDevices.MemoryBrand @Product.MemoryDevices.MemoryName @Product.MemoryDevices.MemoryCapacity @Product.MemoryDevices.MemoryType</td>
+                                </tr>
+                                <tr>
+                                    <th>VGA</th>
+                                    <td>:</td>
+                                    <td>@Product.VGADevices.VGABrand @Product.VGADevices.VGAVRAMSize @Product.VGADevices.VGARefreshRate</td>
+                                </tr>
+                                <tr>
+                                    <th>OS</th>
+                                    <td>:</td>
+                                    <td>@Product.OperatingSytems.OSBrand @Product.OperatingSytems.OSVersion @Product.OperatingSytems.OSEdition</td>
+                                </tr>
+                                <tr>
+                                    <th>Storage</th>
+                                    <td>:</td>
+                                    <td>@Product.StorageDevices.StorageDeviceName @Product.StorageDevices.StorageDeviceCapacity @Product.StorageDevices.StorageDeviceType</td>
+                                </tr>
+                                <tr>
+                                    <td><br /></td>
+                                </tr>
+                                <tr>
+                                    <td><h4 class="text-danger">Rs. @Product.Price</h4></td>
+                                </tr>
+                                <tr>
+                                    <td><br /></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@Model?.ProductId" class="btn btn-danger">Edit <i class="fa fa-pencil" title="Edit"></i></a>
+                                        &nbsp;
+                                        <a asp-action="Index" class="btn btn-outline-danger">Back to List</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+        </dl>
+    </div>
+

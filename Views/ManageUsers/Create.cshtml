@@ -1,0 +1,84 @@
+﻿@model E_Com.Models.Data.User
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    dynamic? UserTypeList = ViewData["UserTypesList"];
+}
+
+
+<div class="row">
+    <div class="col-2">
+        <div class="container-fluid">
+            <div class="row">
+                <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="background-color:white;">
+                    <div class="sidebar-sticky">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="ManageProducts" asp-action="Index">
+                                    Products
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="ManageOrders" asp-action="Index">
+                                    Orders
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="ManageCategories" asp-action="Index">
+                                    Categories
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-controller="ManageUsers" asp-action="Index">
+                                    Users
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <h4>Add an User</h4>
+        <hr />
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="input-group">
+                <input value="User ID" class="form-control" disabled/>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="input-group">
+                <input value="Username" class="form-control" disabled />
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="input-group">
+                <input value="Password" class="form-control" disabled />
+                <input asp-for="Paswword" class="form-control" />
+                <span asp-validation-for="Paswword" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="input-group">
+                <input value="User Type" class="form-control" disabled />
+                <select name="TypeId" class="form-control">
+                    @foreach (var userType in UserTypeList)
+                    {
+                        <option value="@userType.TypeId">@userType.TypeName</option>
+                    }
+                </select>
+                @*<select asp-for="TypeId" class ="form-control" asp-items="ViewBag.TypeId"></select>*@
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-danger" />
+                <a asp-action="Index" class="btn btn-outline-danger">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+

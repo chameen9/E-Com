@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "jc1JzarlEF7iIU8WCvm1h0Th/7mt0aHyVH6LOCxVQbM=",
+  "Hash": "Fuyyy5cJMh4rxdrDBJztN3mtYW/qVhK7peoZFjuOn6M=",
   "Source": "E-Com",
   "BasePath": "_content/E-Com",
   "Mode": "Default",
@@ -1919,6 +1919,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\5981a4a2-88f8-40dc-b2b6-d0710012f421_Screenshot 2023-03-17 140549.png"
+    },
+    {
+      "Identity": "D:\\Beng (Hons)\\AD\\CourseWork 2\\E-Com\\E-Com\\wwwroot\\img\\5cf369dd-da36-4795-acec-7cf0ff56294b_397.jpg",
+      "SourceId": "E-Com",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Beng (Hons)\\AD\\CourseWork 2\\E-Com\\E-Com\\wwwroot\\",
+      "BasePath": "_content/E-Com",
+      "RelativePath": "img/5cf369dd-da36-4795-acec-7cf0ff56294b_397.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\5cf369dd-da36-4795-acec-7cf0ff56294b_397.jpg"
     },
     {
       "Identity": "D:\\Beng (Hons)\\AD\\CourseWork 2\\E-Com\\E-Com\\wwwroot\\img\\6a5a3f27-d2b0-4321-80a2-7d93a8583a82_397.jpg",

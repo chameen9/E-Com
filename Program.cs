@@ -29,6 +29,8 @@ builder.Services.AddScoped<IProcessorService,ProcessorService>();
 builder.Services.AddScoped<IProductCategoryService,ProductCategoryService>();
 builder.Services.AddScoped<IStorageDevicesService, StorageDevicesService>();
 builder.Services.AddScoped<IVGAService, VGAService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserTypeService, UserTypeService>();
 
 
 var app = builder.Build();

@@ -1,0 +1,98 @@
+﻿@model IEnumerable<E_Com.Models.Data.User>
+
+@{
+    ViewData["Title"] = "Users";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    dynamic? UsersList = ViewData["UsersList"];
+}
+
+
+
+<div class="row">
+    <div class="col-2">
+        <div class="container-fluid">
+            <div class="row">
+                <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="background-color:white;">
+                    <div class="sidebar-sticky">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="ManageProducts" asp-action="Index">
+                                    Products
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="ManageOrders" asp-action="Index">
+                                    Orders
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="ManageCategories" asp-action="Index">
+                                    Categories
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-controller="ManageUsers" asp-action="Index">
+                                    Users
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="col-10">
+        <h4>Manage Users</h4>
+        <a asp-action="Create" class="btn btn-danger">Add New <i class="fa fa-plus"></i></a>
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        UserName
+                    </th>
+                    <th>
+                        Password
+                    </th>
+                    <th>
+                        User Type
+                    </th>
+                    <th>
+                        Created At
+                    </th>
+                    <th>
+                        Modified At
+                    </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in UsersList)
+                {
+                    <tr>
+                        <td>
+                            @user.Username
+                        </td>
+                        <td>
+                            @user.Paswword
+                        </td>
+                        <td>
+                            @user.UserTypes.TypeName
+                        </td>
+                        <td>
+                            @user.CreatedAt
+                        </td>
+                        <td>
+                            @user.ModifiedAt
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@user.UserId" class="link-warning"><i class="fa fa-pencil" title="Edit"></i></a>
+                            @*<a asp-action="Details" asp-route-id="@user.UserId">Details</a> |*@
+                            <a asp-action="Delete" asp-route-id="@user.UserId" class="link-danger"><i class="fa fa-trash" title="Delete"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

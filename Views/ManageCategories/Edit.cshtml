@@ -1,0 +1,68 @@
+﻿@model E_Com.Models.Data.ProductCategory
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-2">
+        <div class="container-fluid">
+            <div class="row">
+                <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="background-color:white;">
+                    <div class="sidebar-sticky">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="ManageProducts" asp-action="Index">
+                                    Products
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="ManageOrders" asp-action="Index">
+                                    Orders
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" asp-controller="ManageCategories" asp-action="Index">
+                                    Categories
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="ManageUsers" asp-action="Index">
+                                    Users
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h4>Edit Category</h4>
+        <hr />
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ProductCategoryId" />
+            <div class="form-group">
+                <label for="ProductCategoryName" class="control-label">Category Name</label>
+                <input asp-for="ProductCategoryName" class="form-control" />
+                <span asp-validation-for="ProductCategoryName" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label for="ProductCategoryDescription" class="control-label">Description</label>
+                <input asp-for="ProductCategoryDescription" class="form-control" />
+                <span asp-validation-for="ProductCategoryDescription" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <button type="submit" value="Save" class="btn btn-danger">Save <i class="fa fa-floppy-disk"></i></button>
+                <a asp-action="Index" class="btn btn-outline-danger">Back to List <i class="fa fa-square-caret-left"></i></a>
+            </div>
+        </form>
+    </div>
+</div>
+
